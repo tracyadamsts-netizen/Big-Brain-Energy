@@ -30,18 +30,16 @@ Für Szenario B wird ein AI-gestützter Ansatz verfolgt:
 
 ```mermaid
 flowchart LR
-A[CSV Dateien] --> D[staging]
-B[JSON Datei] --> D
-C[XML Datei] --> D
+    A[CSV Dateien] --> D[staging]
+    B[JSON Datei] --> D
+    C[XML Datei] --> D
 
-D --> E[transform]
-E --> F[Embeddings]
-F --> G[Vector Search]
-G --> H[LLM Matching]
-H --> I[final]
-
-
----
+    D --> E[transform]
+    E --> F[Embeddings]
+    F --> G[Vector Search]
+    G --> H[LLM Matching]
+    H --> I[final]
+```
 
 ## W7
 
