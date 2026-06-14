@@ -1,2 +1,3 @@
 profiling.duckdb
 .DS_Store
+*.wal
