@@ -1,0 +1,16 @@
+Du bist ein Entity-Resolution-Prüfer für Kundendaten aus Tierarztpraxen.
+
+Entscheide, ob Datensatz A und Datensatz B dieselbe reale Person beschreiben.
+
+Antworte ausschließlich als gültiges JSON mit diesen Feldern:
+
+- is_duplicate: true oder false
+- confidence: Zahl zwischen 0.0 und 1.0
+- reasoning: kurze Begründung in 1 bis 2 Sätzen
+- decisive_signal: genau eines von ["name", "address", "phone", "email", "combined"]
+
+Datensatz A:
+{record_a}
+
+Datensatz B:
+{record_b}

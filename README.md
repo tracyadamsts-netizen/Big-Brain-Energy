@@ -142,12 +142,88 @@ Für die spätere Dublettenerkennung werden vorbereitet:
 - HNSW Vector-Index erstellt
 
 ---
+## W9
 
-## Nächste Schritte (W9)
+Erstellt wurden:
 
-- Harmonisierung der Daten
-- Embedding-Erzeugung
-- DuckDB VSS
-- Vector Search
-- LLM-Klassifikation
-- Dubletten-Erkennung
+- `transform.norm_kunde`
+- `transform.norm_behandlung`
+- Embeddings auf Basis der transformierten Kundendaten
+- Vector Search mit DuckDB VSS
+- LLM-basiertes Matching mit `qwen2.5:7b`
+- Pydantic-Schema für strukturierte Entscheidungen
+- Review Queue für unsichere Fälle
+- Evaluation gegen `gold_cluster.csv`
+
+### Transform-Schicht
+
+Erstellte Tabellen:
+
+```text
+transform.norm_kunde
+transform.norm_behandlung
+```
+
+### Matching-Pipeline
+
+```text
+transform.norm_kunde
+        ↓
+Embeddings (nomic-embed-text)
+        ↓
+DuckDB VSS / HNSW
+        ↓
+Vector Search
+        ↓
+LLM Judge (qwen2.5:7b)
+        ↓
+Pydantic Schema
+        ↓
+transform.ai_matches
+```
+
+### Evaluation
+
+| Kennzahl | Wert |
+|-----------|------:|
+| Precision | 0.4809 |
+| Recall | 0.4375 |
+| F1 | 0.4582 |
+
+### Prompt- und Threshold-Kalibrierung
+
+Getestete Prompt-Versionen:
+
+- `match_prompt_v1.txt`
+- `match_prompt_v2.txt`
+
+Getestete Similarity-Thresholds:
+
+| Threshold | F1 |
+|-----------|---:|
+| 0.95 | 0.4113 |
+| 0.90 | 0.4582 |
+
+Der Threshold 0.90 erzielte den höheren F1-Wert und wurde für die weitere Pipeline übernommen.
+
+### Dokumentation
+
+Detaillierte Ergebnisse:
+
+```text
+docs/w9/w9_ergebnis.md
+```
+
+---
+
+## Nächste Schritte (W11)
+
+- Weiterentwicklung der Matching-Pipeline
+- Optimierung von Prompt und Threshold
+- Verbesserung von Precision, Recall und F1
+- Clusterbildung aus Dublettenpaaren
+- Golden-Record-Erzeugung
+- Aufbau von `final.verbund_kunde`
+- Aufbau von `final.verbund_behandlung`
+- Vollständige Verbund-Datenbank
+- Abschlussdokumentation

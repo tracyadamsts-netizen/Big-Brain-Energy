@@ -1,0 +1,2 @@
+gold_pairs,predicted_pairs,tp,fp,fn,precision,recall,f1
+144,131,63,68,81,0.48091603053435117,0.4375,0.4581818181818182
