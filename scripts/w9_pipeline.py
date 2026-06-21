@@ -33,6 +33,25 @@ def normalize_name(name):
     return name.title()
 
 
+def normalize_species(species):
+    if species is None or pd.isna(species):
+        return None
+
+    species = str(species).strip().lower()
+
+    if species == "":
+        return None
+
+    mapping = {
+        "dog": "Hund",
+        "hund": "Hund",
+        "cat": "Katze",
+        "katze": "Katze"
+    }
+
+    return mapping.get(species, species.title())
+
+
 def normalize_street(street):
     if street is None or pd.isna(street):
         return None
@@ -255,7 +274,7 @@ def build_norm_behandlung():
             "kunde_quell_id": str(r["customer_id"]),
             "kunde_nachname": None,
             "patient_name": normalize_name(r["animal_name"]),
-            "tierart": normalize_name(r["species"]),
+            "tierart": normalize_species(r["species"]),
             "behandlungsdatum": normalize_date(r["treatment_date"]),
             "diagnose": str(r["diagnosis"]).strip() if not pd.isna(r["diagnosis"]) else None,
             "kosten_euro": normalize_amount(r["total_eur"]),
@@ -272,7 +291,7 @@ def build_norm_behandlung():
             "kunde_quell_id": None,
             "kunde_nachname": normalize_name(r["kunde"]),
             "patient_name": normalize_name(r["tier_name"]),
-            "tierart": normalize_name(r["tier_art"]),
+            "tierart": normalize_species(r["tier_art"]),
             "behandlungsdatum": normalize_date(r["datum"]),
             "diagnose": str(r["leistung"]).strip() if not pd.isna(r["leistung"]) else None,
             "kosten_euro": normalize_amount(r["betrag"]),
